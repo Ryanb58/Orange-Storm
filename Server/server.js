@@ -6,6 +6,7 @@ app.listen(80);
 
 var chatLog = new Array();
 
+//Start server.
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
   function (err, data) {
@@ -19,13 +20,15 @@ function handler (req, res) {
 }
 
 io.sockets.on('connection', function (socket) {
+	//Send out initial hello to all connected users.
   io.sockets.emit('welcome', "Hello everyone!");
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-	socket.on('sayHello', function (data) {
+	
+	//Function called via client when a user submits a message.
+	socket.on('talk', function (data) {
     console.log(data);
 		chatLog.push(data);
+		
+		//Sends command to client to display the new message.
 		io.sockets.emit('updateChat', data);
   });
 });
