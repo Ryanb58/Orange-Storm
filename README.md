@@ -1,4 +1,4 @@
-Welcome to Orange Storm!	{#welcome}
+Welcome to Orange Storm!
 =====================
 
 
