@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<title>CHAT</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect('http://localhost');
+		
+		socket.on('news', function (data) {
+			console.log(data);
+			socket.emit('my other event', { my: 'data' });
+		});
+		
+		//JQuery Stuff:
+		$( document ).ready(function() {
+			$( "#sayHello" ).click(function() {
+				alert( "Handler for .click() called." );
+				socket.emit('sayHello', { BAM: 'HELLO' });
+			});
+		});		
+	</script>
+</header>
+<body>
+	<button id="sayHello">Say it!</button>
+</body>
+</html>
