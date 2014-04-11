@@ -4,6 +4,8 @@ var app = require('http').createServer(handler)
 
 app.listen(80);
 
+var chatLog = new Array();
+
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
   function (err, data) {
@@ -17,11 +19,13 @@ function handler (req, res) {
 }
 
 io.sockets.on('connection', function (socket) {
-  io.sockets.emit('news', { hello: 'world' });
+  io.sockets.emit('welcome', "Hello everyone!");
   socket.on('my other event', function (data) {
     console.log(data);
   });
 	socket.on('sayHello', function (data) {
     console.log(data);
+		chatLog.push(data);
+		io.sockets.emit('updateChat', data);
   });
 });

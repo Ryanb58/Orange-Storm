@@ -7,7 +7,7 @@
 	<script>
 		var socket = io.connect('http://localhost');
 		
-		socket.on('news', function (data) {
+		socket.on('welcome', function (data) {
 			console.log(data);
 			socket.emit('my other event', { my: 'data' });
 		});
@@ -16,12 +16,18 @@
 		$( document ).ready(function() {
 			$( "#sayHello" ).click(function() {
 				alert( "Handler for .click() called." );
-				socket.emit('sayHello', { BAM: 'HELLO' });
+				socket.emit('sayHello', $('#txtInput').val());
+			});
+			socket.on('updateChat', function (data) {
+				console.log(data);
+				$('#chatTextArea').append('<br />' + data);
 			});
 		});		
 	</script>
 </header>
 <body>
+	<input type="text" id="txtInput" />
 	<button id="sayHello">Say it!</button>
+	<div id="chatTextArea"></div>
 </body>
 </html>
